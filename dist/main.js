@@ -27,7 +27,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var dayj
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _libs_dayjs_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./libs/dayjs.js */ \"./src/libs/dayjs.js\");\n/* harmony import */ var _styles_global_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/global.css */ \"./src/styles/global.css\");\n/* harmony import */ var _styles_form_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/form.css */ \"./src/styles/form.css\");\n/* harmony import */ var _styles_schedule_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles/schedule.css */ \"./src/styles/schedule.css\");\n/* harmony import */ var _modules_form_submit_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/form/submit.js */ \"./src/modules/form/submit.js\");\n\n\n// configuração do day.js \n\n\n// CSS\n\n\n\n\n// JS\n\n\n//# sourceURL=webpack://hairday/./src/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _libs_dayjs_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./libs/dayjs.js */ \"./src/libs/dayjs.js\");\n/* harmony import */ var _styles_global_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/global.css */ \"./src/styles/global.css\");\n/* harmony import */ var _styles_form_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/form.css */ \"./src/styles/form.css\");\n/* harmony import */ var _styles_schedule_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles/schedule.css */ \"./src/styles/schedule.css\");\n/* harmony import */ var _modules_form_submit_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/form/submit.js */ \"./src/modules/form/submit.js\");\n/* harmony import */ var _modules_page_load_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/page-load.js */ \"./src/modules/page-load.js\");\n\n\n// configuração do day.js \n\n\n// CSS\n\n\n\n\n// JS\n\n\n\n//# sourceURL=webpack://hairday/./src/main.js?");
+
+/***/ }),
+
+/***/ "./src/modules/form/hours-load.js":
+/*!****************************************!*\
+  !*** ./src/modules/form/hours-load.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   hoursLoad: () => (/* binding */ hoursLoad)\n/* harmony export */ });\n/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dayjs */ \"./node_modules/dayjs/dayjs.min.js\");\n/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _utils_opening_hours_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/opening-hours.js */ \"./src/utils/opening-hours.js\");\nfunction _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\nfunction _unsupportedIterableToArray(r, a) { if (r) { if (\"string\" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return \"Object\" === t && r.constructor && (t = r.constructor.name), \"Map\" === t || \"Set\" === t ? Array.from(r) : \"Arguments\" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }\nfunction _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }\nfunction _iterableToArrayLimit(r, l) { var t = null == r ? null : \"undefined\" != typeof Symbol && r[Symbol.iterator] || r[\"@@iterator\"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t[\"return\"] && (u = t[\"return\"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }\nfunction _arrayWithHoles(r) { if (Array.isArray(r)) return r; }\n\n\nvar hours = document.getElementById(\"hours\");\nfunction hoursLoad(_ref) {\n  var date = _ref.date;\n  // Limpa a lista de horários\n  hours.innerHTML = \"\";\n  var opening = _utils_opening_hours_js__WEBPACK_IMPORTED_MODULE_1__.openingHours.map(function (hour) {\n    // Recupera somente a hora.\n    var _hour$split = hour.split(\":\"),\n      _hour$split2 = _slicedToArray(_hour$split, 1),\n      scheduleHour = _hour$split2[0];\n\n    // Adiciona a hora na data e verifica se está no passado.\n    var isHourPast = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(date).add(scheduleHour, \"hour\").isBefore(dayjs__WEBPACK_IMPORTED_MODULE_0___default()());\n    return {\n      hour: hour,\n      available: !isHourPast\n    };\n  });\n\n  // Renderiza os horários.\n  opening.forEach(function (_ref2) {\n    var hour = _ref2.hour,\n      available = _ref2.available;\n    var li = document.createElement(\"li\");\n    li.classList.add(\"hour\");\n    li.classList.add(available ? \"hour-available\" : \"hour-unavailable\");\n    li.textContent = hour;\n    if (hour === \"09:00\") {\n      hourHeaderAdd(\"Manhã\");\n    } else if (hour === \"13:00\") {\n      hourHeaderAdd(\"Tarde\");\n    } else if (hour === \"19:00\") {\n      hourHeaderAdd(\"Noite\");\n    }\n    hours.append(li);\n  });\n}\nfunction hourHeaderAdd(title) {\n  var header = document.createElement(\"li\");\n  header.classList.add(\"hour-period\");\n  header.textContent = title;\n  hours.append(header);\n}\n\n//# sourceURL=webpack://hairday/./src/modules/form/hours-load.js?");
 
 /***/ }),
 
@@ -38,7 +49,40 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _lib
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dayjs */ \"./node_modules/dayjs/dayjs.min.js\");\n/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_0__);\n\nvar form = document.querySelector(\"form\");\nvar selectedDate = document.querySelector(\"date\");\n\n// carrega a data atual no input\nselectedDate.value = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(new Date()).format(\"YYYY-MM-DD\");\n\n// Define a data minima como a data atual\nselectedDate.min = dayjs__WEBPACK_IMPORTED_MODULE_0___default()(new Date()).format(\"YYYY-MM-DD\");\nform.onsubmit = function (event) {\n  // previne o comportamento padrão de recarregar a página\n  event.preventDefault();\n  console.log(\"Formulario enviado!\");\n};\n\n//# sourceURL=webpack://hairday/./src/modules/form/submit.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dayjs */ \"./node_modules/dayjs/dayjs.min.js\");\n/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_0__);\n\nvar form = document.querySelector(\"form\");\nvar selectedDate = document.querySelector(\"#date\");\n\n// Data atual para formatar o input\nvar inputToday = dayjs__WEBPACK_IMPORTED_MODULE_0___default()().format(\"YYYY-MM-DD\");\n\n// Carrega a data atual e define a data mínima como sendo a data atual\nselectedDate.value = inputToday;\nselectedDate.min = inputToday;\nform.addEventListener(\"submit\", function (event) {\n  // Previne o comportamento padrão de recarregar a página\n  event.preventDefault();\n  console.log(\"Formulário enviado!\");\n});\n\n//# sourceURL=webpack://hairday/./src/modules/form/submit.js?");
+
+/***/ }),
+
+/***/ "./src/modules/page-load.js":
+/*!**********************************!*\
+  !*** ./src/modules/page-load.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _schedules_load_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./schedules/load.js */ \"./src/modules/schedules/load.js\");\n\ndocument.addEventListener(\"DOMContentLoaded\", function () {\n  (0,_schedules_load_js__WEBPACK_IMPORTED_MODULE_0__.schedulesDay)();\n});\n\n//# sourceURL=webpack://hairday/./src/modules/page-load.js?");
+
+/***/ }),
+
+/***/ "./src/modules/schedules/load.js":
+/*!***************************************!*\
+  !*** ./src/modules/schedules/load.js ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   schedulesDay: () => (/* binding */ schedulesDay)\n/* harmony export */ });\n/* harmony import */ var _form_hours_load_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../form/hours-load.js */ \"./src/modules/form/hours-load.js\");\n\n\n// Seleciona o input de data.\nvar selectedDate = document.getElementById(\"date\");\nfunction schedulesDay() {\n  // Obtém a data do input\n  var date = selectedDate.value;\n\n  // Renderiza as horas disponíveis.\n  (0,_form_hours_load_js__WEBPACK_IMPORTED_MODULE_0__.hoursLoad)({\n    date: date\n  });\n}\n\n//# sourceURL=webpack://hairday/./src/modules/schedules/load.js?");
+
+/***/ }),
+
+/***/ "./src/utils/opening-hours.js":
+/*!************************************!*\
+  !*** ./src/utils/opening-hours.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   openingHours: () => (/* binding */ openingHours)\n/* harmony export */ });\nvar openingHours = [\"09:00\", \"10:00\", \"11:00\", \"12:00\", \"13:00\", \"14:00\", \"15:00\", \"16:00\", \"17:00\", \"18:00\", \"19:00\", \"20:00\", \"21:00\"];\n\n//# sourceURL=webpack://hairday/./src/utils/opening-hours.js?");
 
 /***/ }),
 
