@@ -1,3 +1,29 @@
 {
-  "schedules": []
+  "schedules": [
+    {
+      "id": "1b44ff52-1ecb-465c-9d3e-41161136b1d5",
+      "name": "Samuel Araujo",
+      "when": "2026-11-12T14:00:00.000Z"
+    },
+    {
+      "id": "50893de7-ee43-4c06-bc43-d6ef4cb0062f",
+      "name": "Samuel Araujo",
+      "when": "2026-11-12T15:00:00.000Z"
+    },
+    {
+      "id": "1bbdad9a-218b-4622-a01e-60a73c91a44d",
+      "name": "samuel",
+      "when": "2026-11-13T00:00:00.000Z"
+    },
+    {
+      "id": "ff871207-54da-40ba-9f7e-a733b554369a",
+      "name": "Samuel Araujo",
+      "when": "2026-11-13T13:00:00.000Z"
+    },
+    {
+      "id": "befe3405-f2e5-46d2-9432-f49de46e68f7",
+      "name": "Samuel Araujo",
+      "when": "2026-11-13T13:00:00.000Z"
+    }
+  ]
 }
