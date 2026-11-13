@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { apiConfig } from "./api-config.js";
+import { toast } from "../utils/notify.js";
 
 
 export async function scheduleFetchByDay({ date }) {
@@ -13,13 +14,12 @@ export async function scheduleFetchByDay({ date }) {
         // filtra agendamentos pelo dia selecionado.
         const dailySchedules = data.filter((schedule) => dayjs(date).isSame(schedule.when, 'day'));
 
-        // exibe os agendamentos do dia.
-        
-
-
         return dailySchedules;
     } catch (error) {
         console.log(error);
-        alert("Não foi possível buscar os agendamentos do dia selecionado.")
+        toast.error(
+            "Não foi possível buscar os agendamentos do dia selecionado.",
+            "Erro de conexão"
+        )
     }
 }

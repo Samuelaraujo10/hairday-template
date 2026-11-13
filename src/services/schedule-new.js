@@ -1,4 +1,5 @@
 import { apiConfig } from "./api-config.js";
+import { toast } from "../utils/notify.js";
 
 export async function scheduleNew({ id, name, when }) {
     try {
@@ -14,9 +15,15 @@ export async function scheduleNew({ id, name, when }) {
             })
         })
        
-        alert("Agendamento realizado com sucesso!")
+        toast.success(
+            "O atendimento foi registrado na agenda.",
+            "Agendamento confirmado!"
+        )
     } catch (error) {
         console.log(error);
-        alert("Erro ao realizar agendamento. Tente novamente!")  
+        toast.error(
+            "Não foi possível concluir o agendamento. Tente novamente!",
+            "Falha ao agendar"
+        )
     }
 }

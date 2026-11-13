@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { toast } from "../../utils/notify.js";
 
 // seleciona as sessões manhã, tarde e noite.
 const periodMorning = document.getElementById("period-morning")
@@ -49,6 +50,9 @@ export function schedulesShow({ dailySchedules }) {
 
         });
     } catch (error) {
-        alert('Não foi possivel exibir os agendamentos!')
+        toast.error(
+            "Não foi possível carregar a lista de agendamentos.",
+            "Erro ao exibir agenda"
+        )
     }
 }

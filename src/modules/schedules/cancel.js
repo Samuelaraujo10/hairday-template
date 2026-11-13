@@ -1,5 +1,6 @@
 import { schedulesDay } from "./load.js"
 import { scheduleCancel } from "../../services/schedule-cancel.js"
+import { confirmModal } from "../../utils/notify.js"
 
 
 const periods = document.querySelectorAll('.period')
@@ -16,11 +17,15 @@ periods.forEach((period) => {
       const { id } = item.dataset
 
       if (id) {
-        // confirma o cancelamento
-        const isConfirm = confirm('Tem certeza que deseja cancelar este agendamento?')
+        // confirma o cancelamento com modal personalizado
+        const isConfirm = await confirmModal({
+          title: "Cancelar agendamento",
+          message: "Tem certeza que deseja cancelar este atendimento? Essa ação liberará o horário na agenda.",
+          confirmText: "Sim, cancelar",
+          cancelText: "Manter",
+        })
 
         if (isConfirm) {
-            
             // faz a requisição de cancelamento
             await scheduleCancel({ id })
 

@@ -2,6 +2,7 @@ import dayjs from "dayjs"
 
 import { scheduleNew } from "../../services/schedule-new.js"
 import { schedulesDay } from "../schedules/load.js"
+import { toast } from "../../utils/notify.js"
 
 const form = document.querySelector("form")
 const clienteName = document.getElementById("client")
@@ -23,7 +24,10 @@ form.onsubmit = async (event) => {
     const name = clienteName.value.trim()
 
     if (!name) {
-      return alert("Por favor, insira o nome do cliente!")
+      return toast.warning(
+        "Por favor, informe o nome do cliente para continuar.",
+        "Campo obrigatório"
+      )
     }
 
     // retorna horario selecionado
@@ -31,7 +35,10 @@ form.onsubmit = async (event) => {
     
     // recupera o horario selecionado
     if (!hourSelected) {
-      return alert("Por favor, selecione um horário!")
+      return toast.warning(
+        "Selecione um horário disponível na lista.",
+        "Horário não selecionado"
+      )
     }
 
     // recupera somente a hora
@@ -51,7 +58,10 @@ form.onsubmit = async (event) => {
     clienteName.value = ""
     
   } catch (error) {
-    alert("Não foi possível realizar o agendamento!")
+    toast.error(
+      "Não foi possível realizar o agendamento.",
+      "Erro no agendamento"
+    )
     console.log(error);
   }
 }
