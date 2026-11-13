@@ -1,43 +1,47 @@
-import dayjs from "dayjs";
+import dayjs from "dayjs"
 
-import { openingHours } from "../../utils/opening-hours.js";
-import { hourClick } from "./hours-click.js";
+import { openingHours } from "../../utils/opening-hours.js"
+import { hourClick } from "./hours-click.js"
 
-const hours = document.getElementById('hours')
+// Lista (<ul>) onde os horários serão inseridos no HTML
+const hours = document.getElementById("hours")
 
-export function hoursLoad({ date, dailySchedules }){
- 
-  // limpa a lista de horarios
+export function hoursLoad({ date, dailySchedules }) {
+  // 1. Limpa a lista de horários anterior para não duplicar na tela
   hours.innerHTML = ""
 
-  // obtem lista de horarios ocupados
-  const unavailableHours = dailySchedules.map((schedule) => dayjs(schedule.when).format("HH:mm"))
+  // 2. Cria uma lista apenas com as horas (ex: "14:00") que já estão ocupadas nesse dia
+  const unavailableHours = dailySchedules.map((schedule) =>
+    dayjs(schedule.when).format("HH:mm")
+  )
 
+  // 3. Percorre todos os horários de funcionamento e verifica se cada um está disponível
   const opening = openingHours.map((hour) => {
-    // recupera somente a hora
-    const [scheduleHour] = hour.split(':')
+    // Extrai apenas o número da hora (ex: "09:00" -> "09")
+    const [scheduleHour] = hour.split(":")
 
-    // adiciona a hora na data e verifica se ja passou
+    // Soma a hora na data selecionada e verifica se esse horário já passou em relação ao momento atual
     const isHourPast = dayjs(date).add(scheduleHour, "hour").isBefore(dayjs())
-    
-    //adiciona a hora na date e verifica se esta no passado
+
+    // O horário só fica disponível se NÃO estiver ocupado na API e NÃO estiver no passado
     const available = !unavailableHours.includes(hour) && !isHourPast
-    
+
     return {
       hour,
       available,
-    }   
+    }
   })
-// renderizar horarios
-opening.forEach(({ hour, available }) => {
+
+  // 4. Cria os elementos <li> no HTML para cada horário
+  opening.forEach(({ hour, available }) => {
     const li = document.createElement("li")
 
     li.classList.add("hour")
     li.classList.add(available ? "hour-available" : "hour-unavailable")
-
     li.textContent = hour
 
-    if (hour === "09:00") {  
+    // Insere o cabeçalho divisor de cada período antes do primeiro horário daquele turno
+    if (hour === "09:00") {
       hourHeaderAdd("Manhã")
     } else if (hour === "13:00") {
       hourHeaderAdd("Tarde")
@@ -46,12 +50,13 @@ opening.forEach(({ hour, available }) => {
     }
 
     hours.append(li)
-})
-hourClick()
+  })
+
+  // 5. Ativa o evento de clique nos horários disponíveis recém-criados
+  hourClick()
 }
 
-
-
+// Função auxiliar que cria o título do período (Manhã, Tarde ou Noite) na lista
 function hourHeaderAdd(title) {
   const header = document.createElement("li")
   header.classList.add("hour-period")

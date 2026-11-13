@@ -1,16 +1,16 @@
 export function hourClick() {
-    const hours = document.querySelectorAll(".hour-available")
-    
+  // Seleciona apenas os horários que estão disponíveis para agendamento
+  const hours = document.querySelectorAll(".hour-available")
 
-    hours.forEach(( available ) => {
-        available.addEventListener("click", (selected) => {
-            
-            // Remove a classe hour-selected de todas as li não selecionadas
-            hours.forEach((hour) => {
-                hour.classList.remove("hour-selected")
-            })
-            // adiciona a classe hour-selected na li clicada
-            selected.target.classList.add("hour-selected")
-        })
+  hours.forEach((available) => {
+    available.addEventListener("click", (selected) => {
+      // 1. Remove a seleção (.hour-selected) de todos os horários antes de marcar o novo
+      hours.forEach((hour) => {
+        hour.classList.remove("hour-selected")
+      })
+
+      // 2. Adiciona a classe .hour-selected apenas no item que foi clicado
+      selected.target.classList.add("hour-selected")
     })
+  })
 }

@@ -1,58 +1,58 @@
-import dayjs from "dayjs";
-import { toast } from "../../utils/notify.js";
+import dayjs from "dayjs"
+import { toast } from "../../utils/notify.js"
 
-// seleciona as sessões manhã, tarde e noite.
+// Seleciona as listas (<ul>) de cada período na coluna de agendamentos
 const periodMorning = document.getElementById("period-morning")
 const periodAfternoon = document.getElementById("period-afternoon")
 const periodNight = document.getElementById("period-night")
 
 export function schedulesShow({ dailySchedules }) {
-    try {
-        // limpa as listar
-        periodMorning.innerHTML = ""
-        periodAfternoon.innerHTML = ""
-        periodNight.innerHTML = ""
+  try {
+    // 1. Limpa as listas antes de renderizar para evitar itens duplicados
+    periodMorning.innerHTML = ""
+    periodAfternoon.innerHTML = ""
+    periodNight.innerHTML = ""
 
-        // renderiza agendamentos por periodo
-        dailySchedules.forEach((schedule) => {
-            const item = document.createElement('li')
-            const time = document.createElement('strong')
-            const name = document.createElement('span')
+    // 2. Percorre cada agendamento do dia e monta o item visual (<li>)
+    dailySchedules.forEach((schedule) => {
+      const item = document.createElement("li")
+      const time = document.createElement("strong")
+      const name = document.createElement("span")
 
-            // adiciona o id do agendamento.
-            item.setAttribute('data-id', schedule.id)
-               
-            time.textContent = dayjs(schedule.when).format('HH:mm')  
-            name.textContent = schedule.name
+      // Guarda o ID do agendamento no atributo data-id para usar no cancelamento
+      item.setAttribute("data-id", schedule.id)
 
-            // cria icone de cancelar o agendamento
-            const cancelIcon = document.createElement('img')
-            cancelIcon.classList.add('cancel-icon')
-            cancelIcon.setAttribute('src', './src/assets/cancel.svg')
-            cancelIcon.setAttribute('alt', 'Cancelar')
-            
-            // adiciona o tempo, nome e icone ao item.
-            item.appendChild(time)
-            item.appendChild(name)
-            item.appendChild(cancelIcon)
+      // Formata a data/hora para exibir apenas horas e minutos (ex: "14:00")
+      time.textContent = dayjs(schedule.when).format("HH:mm")
+      name.textContent = schedule.name
 
-            // obtem somente hora
-            const hour = dayjs(schedule.when).hour()
+      // Cria o ícone de cancelar atendimento
+      const cancelIcon = document.createElement("img")
+      cancelIcon.classList.add("cancel-icon")
+      cancelIcon.setAttribute("src", "./src/assets/cancel.svg")
+      cancelIcon.setAttribute("alt", "Cancelar")
 
-            // renderizar o agendamento no periodo correto (manhã, tarde ou noite).
-            if (hour <= 12) {
-                periodMorning.appendChild(item)
-            } else if (hour > 12 && hour < 18) {
-                periodAfternoon.appendChild(item)
-            } else {
-                periodNight.appendChild(item)
-            }
+      // Monta a estrutura: <li> <strong>Hora</strong> <span>Nome</span> <img /> </li>
+      item.appendChild(time)
+      item.appendChild(name)
+      item.appendChild(cancelIcon)
 
-        });
-    } catch (error) {
-        toast.error(
-            "Não foi possível carregar a lista de agendamentos.",
-            "Erro ao exibir agenda"
-        )
-    }
+      // 3. Obtém apenas a hora numérica (0 a 23) para decidir em qual turno inserir
+      const hour = dayjs(schedule.when).hour()
+
+      // Distribui o agendamento na lista do período correspondente
+      if (hour <= 12) {
+        periodMorning.appendChild(item)
+      } else if (hour > 12 && hour < 18) {
+        periodAfternoon.appendChild(item)
+      } else {
+        periodNight.appendChild(item)
+      }
+    })
+  } catch (error) {
+    toast.error(
+      "Não foi possível carregar a lista de agendamentos.",
+      "Erro ao exibir agenda"
+    )
+  }
 }

@@ -1,3 +1,4 @@
+// Ícones em SVG para cada tipo de notificação (sucesso, aviso e erro)
 const ICONS = {
   success: `
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -20,12 +21,14 @@ const ICONS = {
   `,
 }
 
+// Títulos padrões caso nenhum título seja informado ao chamar o toast
 const DEFAULT_TITLES = {
   success: "Sucesso",
   warning: "Atenção",
   error: "Algo deu errado",
 }
 
+// Busca ou cria o container fixo no canto superior direito da tela
 function getContainer() {
   let container = document.querySelector(".toast-container")
   if (!container) {
@@ -36,6 +39,7 @@ function getContainer() {
   return container
 }
 
+// Cria e exibe uma notificação flutuante (Toast) na tela
 function showToast({ type = "success", title, message, duration = 3800 }) {
   const container = getContainer()
 
@@ -55,6 +59,7 @@ function showToast({ type = "success", title, message, duration = 3800 }) {
     <div class="toast-progress" style="animation-duration: ${duration}ms"></div>
   `
 
+  // Anima a saída do toast e o remove do HTML ao terminar
   const removeToast = () => {
     if (toastEl.classList.contains("toast-leaving")) return
     toastEl.classList.add("toast-leaving")
@@ -66,15 +71,18 @@ function showToast({ type = "success", title, message, duration = 3800 }) {
   toastEl.querySelector(".toast-close").addEventListener("click", removeToast)
   container.appendChild(toastEl)
 
+  // Fecha automaticamente após o tempo definido em duration
   setTimeout(removeToast, duration)
 }
 
+// Objeto exportado com atalhos práticos: toast.success(), toast.warning() e toast.error()
 export const toast = {
   success: (message, title) => showToast({ type: "success", title, message }),
   warning: (message, title) => showToast({ type: "warning", title, message }),
   error: (message, title) => showToast({ type: "error", title, message }),
 }
 
+// Exibe um modal de confirmação personalizado e retorna uma Promise (true ou false)
 export function confirmModal({
   title = "Cancelar agendamento",
   message = "Tem certeza que deseja cancelar este agendamento?",
@@ -97,6 +105,7 @@ export function confirmModal({
       </div>
     `
 
+    // Fecha o modal com animação e resolve a Promise com a resposta do usuário
     const close = (result) => {
       overlay.classList.add("modal-leaving")
       overlay.addEventListener(
@@ -122,4 +131,3 @@ export function confirmModal({
     document.body.appendChild(overlay)
   })
 }
-

@@ -1,7 +1,7 @@
 import { schedulesDay } from "../schedules/load.js"
 
-// seleciona o input de data
+// Seleciona o input de data do formulário
 const selectedDate = document.getElementById("date")
 
-// recarrega a lista de horarios quando o input mudar
+// Sempre que o usuário escolher outra data no calendário, recarrega os horários e agendamentos
 selectedDate.onchange = () => schedulesDay()

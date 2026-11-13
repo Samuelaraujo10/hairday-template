@@ -1,3 +1,4 @@
+// Lista fixa com todos os horários de funcionamento da barbearia
 export const openingHours = [
   "09:00",
   "10:00",
